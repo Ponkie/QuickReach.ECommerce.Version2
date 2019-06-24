@@ -7,7 +7,7 @@ using Xunit;
 
 namespace QuickReach.ECommerce.Infra.Data.Test
 {
-    public class UnitTest1
+    public class CategoryRepositoryTest
     {
         [Fact]
         public void Create_WithValidEntity_ShouldCreateDatabaseRecord()
