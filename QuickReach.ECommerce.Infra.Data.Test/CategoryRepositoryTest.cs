@@ -29,7 +29,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var expected = new Category
             {
                 Name = "Shoes",
-                Description = "Shoes Department"
+                Description = "Rubber, Running & Boots"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -95,7 +95,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var expected = new Category
             {
                 Name = "Watch",
-                Description = "Watch Department"
+                Description = "Analog and Digital"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -186,7 +186,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var category = new Category
             {
                 Name = "Watch",
-                Description = "Watch Department"
+                Description = "Watch Analog & Digital"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -226,12 +226,12 @@ namespace QuickReach.ECommerce.Infra.Data.Test
 
             var category = new Category
             {
-                Name = "Watch",
-                Description = "Watch Department"
+                Name = "Phone",
+                Description = "Smartphones & Flip Phones"
             };
 
             var expectedName = "Shoes";
-            var expectedDesc = "Shoe Department";
+            var expectedDesc = "Running, leather & boots";
 
             using (var context = new ECommerceDbContext(options))
             {

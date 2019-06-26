@@ -28,7 +28,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var category = new Category
             {
                 Name = "Shoes",
-                Description = "Shoes Department"
+                Description = "Running, Leather & Boots"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -43,9 +43,9 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             {
                 Name = "UltraBoost 4.0",
                 Description = "Legend Ink",
-                Price = 100,
+                Price = 1500,
                 CategoryID = category.ID,
-                ImageUrl = "image.jpg",
+                ImageUrl = "https://static1.squarespace.com/static/532313ece4b08487acaec7a2/t/5a58c33171c10baff724264e/1515766581481/DTWLHKxWAAA84qZ.jpg?",
                 IsActive = true
             };
 
@@ -85,7 +85,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var category = new Category
             {
                 Name = "Clothing",
-                Description = "Clothing Category"
+                Description = "Shirts, Polo, and Dress"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -98,11 +98,11 @@ namespace QuickReach.ECommerce.Infra.Data.Test
 
             var product = new Product
             {
-                Name = "T-Shirt",
+                Name = "White T-Shirt",
                 Description = "Small",
                 Price = 250,
                 CategoryID = category.ID,
-                ImageUrl = "123bc.jpg",
+                ImageUrl = "https://de9luwq5d40h2.cloudfront.net/catalog/product/zoom_image/00_407044.jpg",
                 IsActive = true
             };
 
@@ -136,7 +136,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var category = new Category
             {
                 Name = "Phone",
-                Description = "Phone Category"
+                Description = "Smartphone, Flip Phones"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -150,10 +150,10 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var product = new Product
             {
                 Name = "Redmi Note 7",
-                Description = "6gb",
+                Description = "Blue 6GB RAM 128GB Storage",
                 Price = 100,
                 CategoryID = category.ID,
-                ImageUrl = "123abcd.jpg",
+                ImageUrl = "https://d2pa5gi5n2e1an.cloudfront.net/global/images/product/mobilephones/Xiaomi_Redmi_Note_7/Xiaomi_Redmi_Note_7_L_1.jpg",
                 IsActive = true
             };
 
@@ -185,8 +185,8 @@ namespace QuickReach.ECommerce.Infra.Data.Test
 
             var category = new Category
             {
-                Name = "Phone",
-                Description = "Phone Category"
+                Name = "Watch",
+                Description = "Analog & Digital Watches"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -241,13 +241,13 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             var category = new Category
             {
                 Name = "Shoes",
-                Description = "Shoes Department"
+                Description = "Running, Leather & Boots"
             };
 
             var category2 = new Category
             {
-                Name = "Dress",
-                Description = "Dress Department"
+                Name = "Clothing",
+                Description = "Shirts, Long-Sleeves & Dress"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -261,11 +261,11 @@ namespace QuickReach.ECommerce.Infra.Data.Test
 
             var product = new Product
             {
-                Name = "Jacket",
-                Description = "100% Wool",
-                Price = 250,
+                Name = "UltraBoost 4.0",
+                Description = "Legend Ink",
+                Price = 1500,
                 CategoryID = category.ID,
-                ImageUrl = "Jacket.jpg",
+                ImageUrl = "https://static1.squarespace.com/static/532313ece4b08487acaec7a2/t/5a58c33171c10baff724264e/1515766581481/DTWLHKxWAAA84qZ.jpg?",
                 IsActive = true
             };
 
@@ -282,7 +282,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
                 var expectedDesc = "Cotton";
                 var expectedPrice = 150;
                 var expectedCategory = category2.ID;
-                var expectedImg = "Tshirt.png";
+                var expectedImg = "https://de9luwq5d40h2.cloudfront.net/catalog/product/zoom_image/00_407044.jpg";
 
                 actual.Name = expectedName;
                 actual.CategoryID = expectedCategory;
