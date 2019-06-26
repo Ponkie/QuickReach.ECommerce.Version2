@@ -106,9 +106,15 @@ namespace QuickReach.ECommerce.Infra.Data.Test
                 IsActive = true
             };
 
+
             using (var context = new ECommerceDbContext(options))
             {
                 context.Products.Add(product);
+                context.SaveChanges();
+            }
+
+            using (var context = new ECommerceDbContext(options))
+            {
                 //Act
                 var sut = new ProductRepository(context);
                 var actual = sut.Retrieve(product.ID);
@@ -160,6 +166,11 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             using (var context = new ECommerceDbContext(options))
             {
                 context.Products.Add(product);
+                context.SaveChanges();
+            }
+
+            using (var context = new ECommerceDbContext(options))
+            {
                 //Act
                 var sut = new ProductRepository(context);
                 sut.Delete(product.ID);
@@ -304,6 +315,45 @@ namespace QuickReach.ECommerce.Infra.Data.Test
                 Assert.Equal(expected.ImageUrl, expectedImg);
 
             }
+
+        }
+
+        [Fact]
+        public void Create_WithInvalidCategoryID_ShouldThrowException()
+        {
+            //Arrange
+            var connectionBuilder = new SqliteConnectionStringBuilder()
+            {
+                DataSource = ":memory:"
+            };
+
+            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
+
+            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
+                .UseSqlite(connection)
+                .Options;
+
+            var product = new Product
+            {
+                Name = "UltraBoost 4.0",
+                Description = "Legend Ink",
+                Price = 1500,
+                CategoryID = 0,
+                ImageUrl = "https://static1.squarespace.com/static/532313ece4b08487acaec7a2/t/5a58c33171c10baff724264e/1515766581481/DTWLHKxWAAA84qZ.jpg?",
+                IsActive = true
+            };
+
+            using (var context = new ECommerceDbContext(options))
+            {
+                context.Database.OpenConnection();
+                context.Database.EnsureCreated();
+
+                //Act//Actual
+                var sut = new ProductRepository(context);
+                Assert.Throws<SystemException>( ()=> sut.Create(product));
+            }
+
+
 
         }
 

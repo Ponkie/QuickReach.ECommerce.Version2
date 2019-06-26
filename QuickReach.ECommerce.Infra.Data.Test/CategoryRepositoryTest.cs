@@ -257,5 +257,59 @@ namespace QuickReach.ECommerce.Infra.Data.Test
                 Assert.Equal(expectedDesc, expected.Description);
             }
         }
+
+        [Fact]
+        public void Delete_WithExistingProducts_ShouldThrowException()
+        {
+            //Arrange
+            var connectionBuilder = new SqliteConnectionStringBuilder()
+            {
+                DataSource = ":memory:"
+            };
+            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
+
+            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
+                    .UseSqlite(connection)
+                    .Options;
+
+            var category = new Category
+            {
+                Name = "Phone",
+                Description = "Smartphones & Flip Phones"
+            };
+
+            
+            using (var context = new ECommerceDbContext(options))
+            {
+                context.Database.OpenConnection();
+                context.Database.EnsureCreated();
+                context.Categories.Add(category);
+                context.SaveChanges();
+            }
+
+            var product = new Product
+            {
+                Name = "UltraBoost 4.0",
+                Description = "Legend Ink",
+                Price = 1500,
+                CategoryID = category.ID,
+                ImageUrl = "https://static1.squarespace.com/static/532313ece4b08487acaec7a2/t/5a58c33171c10baff724264e/1515766581481/DTWLHKxWAAA84qZ.jpg?",
+                IsActive = true
+            };
+
+            using (var context = new ECommerceDbContext(options))
+            {
+                context.Products.Add(product);
+                context.SaveChanges();
+            }
+
+            using (var context = new ECommerceDbContext(options))
+            {
+                //Act//Assert
+                var sut = new CategoryRepository(context);
+                Assert.Throws<SystemException>(() => sut.Delete(category.ID));
+            }
+
+        }
     }
 }

@@ -114,18 +114,16 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             {
                 DataSource = ":memory:"
             };
-
             var connection = new SqliteConnection(connectionBuilder.ConnectionString);
 
             var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                .UseSqlite(connection)
-                .Options;
+                    .UseSqlite(connection)
+                    .Options;
 
             var supplier = new Supplier
             {
-                Name = "CDR-King",
-                Description = "All-Around Seller",
-                IsActive = true
+                Name = "Watch",
+                Description = "Watch Analog & Digital"
             };
 
             using (var context = new ECommerceDbContext(options))
@@ -142,6 +140,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
                 //Act
                 var sut = new SupplierRepository(context);
                 sut.Delete(actual.ID);
+
                 //Assert
                 Assert.Null(context.Suppliers.Find(actual.ID));
             }
