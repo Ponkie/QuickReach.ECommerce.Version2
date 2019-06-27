@@ -4,6 +4,7 @@ using QuickReach.ECommerce.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
 {
@@ -16,8 +17,14 @@ namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
                 .ValueGeneratedOnAdd();
 
             builder.HasOne(p => p.Category)
-                   .WithMany(c => c.Products);
-            
+                   .WithMany(c => c.Products)
+                   .OnDelete(DeleteBehavior.Restrict);
+                   
+
+
+
+
+
         }
     }
 }

@@ -16,14 +16,14 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
 
         public override Product Create(Product newProduct)
         {
-            var category = this.context.Categories
-                .Where(c => c.ID == newProduct.CategoryID)
-                .FirstOrDefault();
-                
-            if (category == null)
-            {
-                throw new SystemException("Please enter a valid category");
-            }
+            //var category = this.context.Categories
+            //    .Where(c => c.ID == newProduct.CategoryID)
+            //    .FirstOrDefault();
+
+            //if (category == null)
+            //{
+            //    throw new SystemException("Category has existing products!");
+            //}
 
             this.context.Set<Product>()
                 .Add(newProduct);

@@ -307,7 +307,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
             {
                 //Act//Assert
                 var sut = new CategoryRepository(context);
-                Assert.Throws<SystemException>(() => sut.Delete(category.ID));
+                Assert.Throws<DbUpdateException> (() => sut.Delete(category.ID));
             }
 
         }
