@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using QuickReach.ECommerce.Infra.Data.Test.Utilities;
 
 namespace QuickReach.ECommerce.Infra.Data.Test
 {
@@ -15,15 +16,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
         public void Create_WithValidEntity_ShouldCreateDatabaseRecord()
         {
             // Arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
+            var options = ConnectionOptionHelper.Sqlite();
 
 
             var expected = new Category
@@ -81,15 +74,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
         [Fact]
         public void Retrieve_WithValidEntityID_ReturnsAValidEntity()
         {
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
+            var options = ConnectionOptionHelper.Sqlite();
 
 
             var expected = new Category
@@ -134,16 +119,8 @@ namespace QuickReach.ECommerce.Infra.Data.Test
         public void Retrieve_WithSkipAndCount_ReturnsTheCorrectPage()
         {
             //Arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
+            var options = ConnectionOptionHelper.Sqlite();
 
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
-            
             using (var context = new ECommerceDbContext(options))
             {
                 context.Database.OpenConnection();
@@ -173,15 +150,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
         public void Delete_WithValidEntity_ShouldRemoveAddedRecords()
         {
             //Arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
+            var options = ConnectionOptionHelper.Sqlite();
 
             var category = new Category
             {
@@ -214,15 +183,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
         public void Update_WithValidEntity_ShouldUpdateRecords()
         {
             //Arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
+            var options = ConnectionOptionHelper.Sqlite();
 
             var category = new Category
             {
@@ -262,15 +223,7 @@ namespace QuickReach.ECommerce.Infra.Data.Test
         public void Delete_WithExistingProducts_ShouldThrowException()
         {
             //Arrange
-            var connectionBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = ":memory:"
-            };
-            var connection = new SqliteConnection(connectionBuilder.ConnectionString);
-
-            var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-                    .UseSqlite(connection)
-                    .Options;
+            var options = ConnectionOptionHelper.Sqlite();
 
             var category = new Category
             {
@@ -292,7 +245,6 @@ namespace QuickReach.ECommerce.Infra.Data.Test
                 Name = "UltraBoost 4.0",
                 Description = "Legend Ink",
                 Price = 1500,
-                CategoryID = category.ID,
                 ImageUrl = "https://static1.squarespace.com/static/532313ece4b08487acaec7a2/t/5a58c33171c10baff724264e/1515766581481/DTWLHKxWAAA84qZ.jpg?",
                 IsActive = true
             };

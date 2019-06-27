@@ -39,14 +39,12 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
             .Take(count)
             .ToList();
 
-            return result;
-                                                       
+            return result;                                       
         }
 
         public override Category Retrieve(int entityId)
         {
             var entity = this.context.Categories
-                       .Include(c => c.Products)
                        .Where(c => c.ID == entityId)
                        .FirstOrDefault();
             return entity;

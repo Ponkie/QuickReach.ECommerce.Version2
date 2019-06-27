@@ -13,23 +13,7 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
         {
 
         }
-
-        public override Product Create(Product newProduct)
-        {
-            //var category = this.context.Categories
-            //    .Where(c => c.ID == newProduct.CategoryID)
-            //    .FirstOrDefault();
-
-            //if (category == null)
-            //{
-            //    throw new SystemException("Category has existing products!");
-            //}
-
-            this.context.Set<Product>()
-                .Add(newProduct);
-            this.context.SaveChanges();
-            return newProduct;
-        }
+  
 
         public IEnumerable<Product> Retrieve(string search = "", int skip = 0, int count = 10)
         {

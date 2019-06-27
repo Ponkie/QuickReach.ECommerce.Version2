@@ -13,9 +13,9 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
         {
             this.context = context;
         }
-        public virtual TEntity Create(TEntity newEntity)
+        public TEntity Create(TEntity newEntity)
         {
-            
+     
             this.context.Set<TEntity>()
                 .Add(newEntity);
             this.context.SaveChanges();

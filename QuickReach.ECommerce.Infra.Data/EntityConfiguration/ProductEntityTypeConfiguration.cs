@@ -10,21 +10,13 @@ namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
 {
     public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
     {
+        public object CategoryID { get; internal set; }
+
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.Property(p => p.ID)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
-
-            builder.HasOne(p => p.Category)
-                   .WithMany(c => c.Products)
-                   .OnDelete(DeleteBehavior.Restrict);
-                   
-
-
-
-
-
         }
     }
 }
