@@ -15,23 +15,25 @@ namespace QuickReach.ECommerce.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductRepository repository;
-        public ProductsController(IProductRepository repository)
+        private readonly IProductRepository productRepository;
+        private readonly ICategoryRepository categoryRepository;
+        public ProductsController(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
-            this.repository = repository;
+            this.categoryRepository = categoryRepository;
+            this.productRepository = productRepository;
         }
 
         [HttpGet]
         public IActionResult Get(string search = "", int skip = 0, int count = 10)
         {
-            var products = this.repository.Retrieve(search, skip, count);
+            var products = this.productRepository.Retrieve(search, skip, count);
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var product = this.repository.Retrieve(id);
+            var product = this.productRepository.Retrieve(id);
             return Ok(product);
         }
 
@@ -43,10 +45,23 @@ namespace QuickReach.ECommerce.API.Controllers
                 return BadRequest();
             }
 
-            this.repository.Create(newProduct);
+            this.productRepository.Create(newProduct);
 
             return CreatedAtAction(nameof(this.Get), new { id = newProduct.ID }, newProduct);
         }
+
+        [HttpPost("{id}")]
+        //public IActionResult Post([FromBody] Product newProduct)
+        //{
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    this.productRepository.Create(newProduct);
+
+        //    return CreatedAtAction(nameof(this.Get), new { id = newProduct.ID }, newProduct);
+        //}
 
         [HttpPut]
         public IActionResult Put(int id, [FromBody] Product product)
@@ -56,7 +71,7 @@ namespace QuickReach.ECommerce.API.Controllers
                 return BadRequest();
             }
 
-            this.repository.Update(id, product);
+            this.productRepository.Update(id, product);
 
             return Ok(product);
         }
@@ -64,7 +79,7 @@ namespace QuickReach.ECommerce.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            this.repository.Delete(id);
+            this.productRepository.Delete(id);
 
             return Ok();
         }

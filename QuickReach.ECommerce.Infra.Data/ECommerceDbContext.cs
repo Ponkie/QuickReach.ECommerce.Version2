@@ -24,9 +24,9 @@ namespace QuickReach.ECommerce.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //var connectionString = "Server=.;Database=QuickReachDb;Integrated Security=true;";
-            //optionsBuilder.UseSqlServer(connectionString);
-            //base.OnConfiguring(optionsBuilder);
+            var connectionString = "Server=.;Database=QuickReachDb;Integrated Security=true;";
+            optionsBuilder.UseSqlServer(connectionString);
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,7 +42,7 @@ namespace QuickReach.ECommerce.Infra.Data
             }
         }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; } 
         public DbSet<Supplier> Suppliers { get; set; }
     }
 }

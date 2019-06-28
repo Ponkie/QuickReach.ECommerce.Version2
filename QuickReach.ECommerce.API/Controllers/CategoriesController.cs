@@ -15,25 +15,29 @@ namespace QuickReach.ECommerce.API.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryRepository repository;
-        public CategoriesController(ICategoryRepository repository)
+        private readonly IProductRepository productRepository;
+        private readonly ICategoryRepository categoryRepository;
+        public CategoriesController(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
-            this.repository = repository;
+            this.categoryRepository = categoryRepository;
+            this.productRepository = productRepository;
         }
 
         [HttpGet]
         public IActionResult Get(string search="", int skip = 0, int count = 10)
         {
-            var categories = this.repository.Retrieve(search, skip, count);
+            var categories = this.categoryRepository.Retrieve(search, skip, count);
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var category = this.repository.Retrieve(id);
+            var category = this.categoryRepository.Retrieve(id);
             return Ok(category);
         }
+
+
 
         [HttpPost]
         public IActionResult Post([FromBody] Category newCategory)
@@ -43,9 +47,32 @@ namespace QuickReach.ECommerce.API.Controllers
                 return BadRequest();
             }
 
-            this.repository.Create(newCategory);
+            this.categoryRepository.Create(newCategory);
 
             return CreatedAtAction(nameof(this.Get), new { id = newCategory.ID }, newCategory);
+        }
+
+        [HttpPut("{id}/products")]
+        public IActionResult AddCategoryProduct(int id, [FromBody] ProductCategory entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var category = categoryRepository.Retrieve(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            if (productRepository.Retrieve(entity.ProductID) == null)
+            {
+                return NotFound();
+            }
+            category.AddProduct(entity);
+
+            categoryRepository.Update(id, category);
+            return Ok(category);
+
         }
 
         [HttpPut]
@@ -56,7 +83,7 @@ namespace QuickReach.ECommerce.API.Controllers
                 return BadRequest();
             }
 
-            this.repository.Update(id, category);
+            this.categoryRepository.Update(id, category);
 
             return Ok(category);
         }
@@ -64,8 +91,29 @@ namespace QuickReach.ECommerce.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            this.repository.Delete(id);
+            this.categoryRepository.Delete(id);
 
+            return Ok();
+        }
+
+        [HttpPut("{id}/products/{productId}")]
+        public IActionResult DeleteCategoryProduct(int id, int productId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var category = categoryRepository.Retrieve(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            if (productRepository.Retrieve(productId) == null)
+            {
+                return NotFound();
+            }
+            category.RemoveProduct(productId);
+            categoryRepository.Update(id, category);
             return Ok();
         }
     }

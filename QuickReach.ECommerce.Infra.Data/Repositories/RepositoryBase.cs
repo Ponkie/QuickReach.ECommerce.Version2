@@ -33,7 +33,7 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
         {
             var entity = this.context
                 .Set<TEntity>()
-                //.AsNoTracking()
+                .AsNoTracking()
                 .FirstOrDefault(c => c.ID == entityId);
 
             return entity;
