@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace QuickReach.ECommerce.Domain.Models
@@ -17,5 +18,18 @@ namespace QuickReach.ECommerce.Domain.Models
         public string Description { get; set; }
         [Required]
         public bool IsActive { get; set; }
+        public IEnumerable<ProductSupplier> ProductSuppliers { get; set; }
+
+        public void AddProduct(ProductSupplier child)
+        {
+            ((ICollection<ProductSupplier>)this.ProductSuppliers).Add(child);
+        }
+
+        public ProductSupplier GetProduct(int productId)
+        {
+            return ((ICollection<ProductSupplier>)this.ProductSuppliers)
+                    .FirstOrDefault(pc => pc.SupplierID == this.ID &&
+                               pc.ProductID == productId);
+        }
     }
 }

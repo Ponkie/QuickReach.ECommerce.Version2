@@ -25,5 +25,13 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
 
             return result;
         }
+
+        public override Supplier Retrieve(int entityId)
+        {
+            var entity = this.context.Suppliers
+                       .Where(c => c.ID == entityId)
+                       .FirstOrDefault();
+            return entity;
+        }
     }
 }

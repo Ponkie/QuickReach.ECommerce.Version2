@@ -15,23 +15,27 @@ namespace QuickReach.ECommerce.API.Controllers
     [ApiController]
     public class SuppliersController : ControllerBase
     {
-        private readonly ISupplierRepository repository;
-        public SuppliersController(ISupplierRepository repository)
+        private readonly ISupplierRepository supplierRepository;
+        private readonly IProductRepository productRepository;
+        private readonly ECommerceDbContext context;
+        public SuppliersController(ISupplierRepository supplierRepository, IProductRepository productRepository, ECommerceDbContext context)
         {
-            this.repository = repository;
+            this.supplierRepository = supplierRepository;
+            this.productRepository = productRepository;
+            this.context = context;
         }
 
         [HttpGet]
         public IActionResult Get(string search = "", int skip = 0, int count = 10)
         {
-            var suppliers = this.repository.Retrieve(search, skip, count);
+            var suppliers = this.supplierRepository.Retrieve(search, skip, count);
             return Ok(suppliers);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var supplier = this.repository.Retrieve(id);
+            var supplier = this.supplierRepository.Retrieve(id);
             return Ok(supplier);
         }
 
@@ -43,7 +47,7 @@ namespace QuickReach.ECommerce.API.Controllers
                 return BadRequest();
             }
 
-            this.repository.Create(newSupplier);
+            this.supplierRepository.Create(newSupplier);
 
             return CreatedAtAction(nameof(this.Get), new { id = newSupplier.ID }, newSupplier);
         }
@@ -56,7 +60,7 @@ namespace QuickReach.ECommerce.API.Controllers
                 return BadRequest();
             }
 
-            this.repository.Update(id, supplier);
+            this.supplierRepository.Update(id, supplier);
 
             return Ok(supplier);
         }
@@ -64,9 +68,34 @@ namespace QuickReach.ECommerce.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            this.repository.Delete(id);
+            this.supplierRepository.Delete(id);
 
             return Ok();
+        }
+
+        [HttpPut("{id}/products")]
+        public IActionResult AddProductSupplier(int id, [FromBody] ProductSupplier entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var supplier = supplierRepository.Retrieve(id);
+            if (supplier == null)
+            {
+                return NotFound();
+            }
+            if (productRepository.Retrieve(entity.ProductID) == null)
+            {
+                return NotFound();
+            }
+
+            supplier.AddProduct(entity);
+
+            supplierRepository.Update(id, supplier);
+            return Ok(supplier);
+
         }
     }
 }

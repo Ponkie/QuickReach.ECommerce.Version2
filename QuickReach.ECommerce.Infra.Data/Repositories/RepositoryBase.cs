@@ -50,8 +50,9 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
 
         public TEntity Update(int entityId, TEntity entity)
         {
-            var oldEntity = Retrieve(entityId);
-            this.context.Update<TEntity>(entity);
+            //var oldEntity = Retrieve(entityId);
+
+            this.context.Update(entity);
 
             this.context.SaveChanges();
 
