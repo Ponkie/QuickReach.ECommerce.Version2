@@ -9,7 +9,7 @@ namespace QuickReach.ECommerce.Domain.Models
 {
     [Table("Category")]
     public class Category : EntityBase
-    {
+    { 
         public Category()
         {
             this.ChildCategories = new List<CategoryRollup>();

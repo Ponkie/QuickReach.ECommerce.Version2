@@ -8,18 +8,15 @@ using System.Text;
 
 namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
 {
-    class CartEntityTypeConfiguration : IEntityTypeConfiguration<Cart>
+    class CartItemEntityTypeConfiguration : IEntityTypeConfiguration<CartItem>
     {
-        public void Configure(EntityTypeBuilder<Cart> builder)
+        public void Configure(EntityTypeBuilder<CartItem> builder)
         {
-            builder.Property(c => c.ID)
+            builder.Property(c => c.Id)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
 
-            builder.HasMany(i => i.Items);
-                   
-         
         }
     }
 }

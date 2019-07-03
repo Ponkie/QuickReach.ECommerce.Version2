@@ -1,4 +1,5 @@
 ﻿using QuickReach.ECommerce.Domain.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 public class Customer : EntityBase
@@ -27,4 +28,6 @@ public class Customer : EntityBase
     public string FirstName { get; set; }
     [Required]
     public string LastName { get; set; }
+
+    public IEnumerable<Cart> Carts { get; set; }
 }

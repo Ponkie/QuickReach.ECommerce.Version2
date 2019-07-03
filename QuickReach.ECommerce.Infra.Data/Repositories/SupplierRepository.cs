@@ -3,6 +3,7 @@ using QuickReach.ECommerce.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 
 namespace QuickReach.ECommerce.Infra.Data.Repositories
@@ -29,6 +30,7 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
         public override Supplier Retrieve(int entityId)
         {
             var entity = this.context.Suppliers
+                       .Include(c => c.ProductSuppliers)
                        .Where(c => c.ID == entityId)
                        .FirstOrDefault();
             return entity;

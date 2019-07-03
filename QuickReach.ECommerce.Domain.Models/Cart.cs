@@ -15,6 +15,14 @@ namespace QuickReach.ECommerce.Domain.Models
             CustomerId = customerId;
             Items = new List<CartItem>();
         }
+
+        public void AddCartItem(CartItem cartItem)
+        {
+            ((ICollection<CartItem>)this.Items).Add(cartItem);
+        }
+        
+
+        
     }
 }
 

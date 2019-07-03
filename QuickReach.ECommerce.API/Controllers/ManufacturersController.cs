@@ -13,12 +13,12 @@ namespace QuickReach.ECommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SuppliersController : ControllerBase
+    public class ManufacturersController : ControllerBase
     {
-        private readonly ISupplierRepository repository;
+        private readonly IManufacturerRepository repository;
         private readonly IProductRepository productRepository;
         private readonly ECommerceDbContext context;
-        public SuppliersController(ISupplierRepository repository, IProductRepository productRepository, ECommerceDbContext context)
+        public ManufacturersController(IManufacturerRepository repository, IProductRepository productRepository, ECommerceDbContext context)
         {
             this.repository = repository;
             this.productRepository = productRepository;
@@ -28,35 +28,34 @@ namespace QuickReach.ECommerce.API.Controllers
         [HttpGet]
         public IActionResult Get(string search = "", int skip = 0, int count = 10)
         {
-            var supplier = repository.Retrieve(search, skip, count);
-            return Ok(supplier);
+            var manufacturer = repository.Retrieve(search, skip, count);
+            return Ok(manufacturer);
         }
-
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var supplier = this.repository.Retrieve(id);
-            return Ok(supplier);
+            var manufacturer = this.repository.Retrieve(id);
+            return Ok(manufacturer);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Supplier newSupplier)
+        public IActionResult Post([FromBody] Manufacturer newManufacturer)
         {
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            this.repository.Create(newSupplier);
+            this.repository.Create(newManufacturer);
 
-            return CreatedAtAction(nameof(this.Get), new { id = newSupplier }, newSupplier);
+            return CreatedAtAction(nameof(this.Get), new { id = newManufacturer }, newManufacturer);
         }
 
         [HttpPut("{id}/products")]
-        public IActionResult AddSupplierProduct(int id, [FromBody] ProductSupplier entity)
+        public IActionResult AddSupplierManufacturer(int id, [FromBody] ProductManufacturer entity)
         {
-            var supplier = repository.Retrieve(id);
+            var manufacturer = repository.Retrieve(id);
             var product = productRepository.Retrieve(entity.ProductID);
 
             if (!ModelState.IsValid)
@@ -64,7 +63,7 @@ namespace QuickReach.ECommerce.API.Controllers
                 return BadRequest();
             }
 
-            if (supplier == null)
+            if (manufacturer == null)
             {
                 return NotFound();
             }
@@ -74,14 +73,14 @@ namespace QuickReach.ECommerce.API.Controllers
                 return NotFound();
             }
 
-            supplier.AddProduct(entity);
-            repository.Update(id, supplier);
+            manufacturer.AddProduct(entity);
+            repository.Update(id, manufacturer);
 
-            return Ok(supplier);
+            return Ok(manufacturer);
         }
 
         [HttpPut("{id}/products/{productId}")]
-        public IActionResult DeleteSupplierProduct(int id, int productId)
+        public IActionResult DeleteSupplierManufacturer(int id, int productId)
         {
             var supplier = repository.Retrieve(id);
             var product = productRepository.Retrieve(productId);
@@ -99,24 +98,25 @@ namespace QuickReach.ECommerce.API.Controllers
             {
                 return NotFound();
             }
-
-            supplier.RemoveProduct(productId);
+           
             repository.Update(id, supplier);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Supplier newSupplier)
+        public IActionResult Put(int id, [FromBody] Manufacturer newManufacturer)
         {
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            this.repository.Update(id, newSupplier);
+            this.repository.Update(id, newManufacturer);
 
             return Ok(repository);
         }
+
+
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

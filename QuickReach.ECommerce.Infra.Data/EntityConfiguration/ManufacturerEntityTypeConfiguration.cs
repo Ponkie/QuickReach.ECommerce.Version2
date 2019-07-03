@@ -5,21 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
 {
-    class CartEntityTypeConfiguration : IEntityTypeConfiguration<Cart>
+    class ManufacturerEntityTypeConfiguration : IEntityTypeConfiguration<Manufacturer>
     {
-        public void Configure(EntityTypeBuilder<Cart> builder)
+        public void Configure(EntityTypeBuilder<Manufacturer> builder)
         {
             builder.Property(c => c.ID)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
-
-
-            builder.HasMany(i => i.Items);
-                   
-         
         }
     }
 }
