@@ -24,34 +24,42 @@ namespace QuickReach.ECommerce.API.Controllers
             this.context = context;
         }
 
+        [HttpGet]
+        public IActionResult Get(string search = "", int skip = 0, int count = 10)
+        {
+            var carts = this.cartRepository.Retrieve(search, skip, count);
+            return Ok(carts);
+        }
 
         [HttpGet("{id}/items")]
         public IActionResult GetCartItemsInCart(int id)
         {
-            var cart = this.cartRepository.Retrieve(id);
+            var cart = cartRepository.Retrieve(id);
             return Ok(cart);
         }
 
-        [HttpPut("{id}/items")]
-        public IActionResult AddCartItems(int id, [FromBody] CartItem entity)
+        [HttpPost("{id}/items/{productId}")]
+        public IActionResult AddCartItems(int id, int productId, [FromBody] CartItem entity)
         {
+            var cart = cartRepository.Retrieve(id);
+            var product = productRepository.Retrieve(productId);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var cart = cartRepository.Retrieve(id);
-
+            
             if (cart == null)
             {
                 return NotFound();
             }
 
-            if (productRepository.Retrieve(entity.ProductId) == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            cart.AddCartItem(entity);
+            cart.AddCartItem(product, entity);
 
             cartRepository.Update(entity.Id, cart);
             return Ok(cart);

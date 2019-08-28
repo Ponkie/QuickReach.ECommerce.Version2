@@ -10,12 +10,14 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
 {
     public class CartRepository : RepositoryBase<Cart>, ICartRepository
     {
+
         public CartRepository(ECommerceDbContext context) : base(context)
         {
 
         }
 
-      
+
+
         public override Cart Retrieve(int entityId)
         {
             var entity = this.context.Carts
@@ -24,5 +26,19 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
                        .FirstOrDefault();
             return entity;
         }
+
+        public IEnumerable<Cart> Retrieve(string search = "", int skip = 0, int count = 10)
+        {
+            var result = this.context.Carts
+                   .Where(c => c.CustomerId.ToString() == search)
+                   .Skip(skip)
+                   .Take(count)
+                   .ToList();
+            return result;
+
+
+        }
     }
 }
+
+  

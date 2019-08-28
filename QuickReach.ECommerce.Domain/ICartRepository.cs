@@ -7,6 +7,6 @@ namespace QuickReach.ECommerce.Domain
 {
     public interface ICartRepository : IRepository<Cart>
     {
-
+        IEnumerable<Cart> Retrieve(string search = "", int skip = 0, int count = 10);
     }
 }

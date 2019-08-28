@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace QuickReach.ECommerce.Infra.Data.Repositories
 {
-    class ManufacturerRepository : RepositoryBase<Manufacturer>, IManufacturerRepository
+    public class ManufacturerRepository : RepositoryBase<Manufacturer>, IManufacturerRepository
     {
         public ManufacturerRepository(ECommerceDbContext context) : base(context)
         {

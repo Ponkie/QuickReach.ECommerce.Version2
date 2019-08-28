@@ -12,9 +12,7 @@ namespace QuickReach.ECommerce.Domain.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
         public string ProductId { get; set; }
-        [Required]
         public string ProductName { get; set; }
         [Required]
         public decimal UnitPrice { get; set; }
@@ -25,7 +23,13 @@ namespace QuickReach.ECommerce.Domain.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new NotImplementedException();
+            var result = new List<ValidationResult>();
+
+            if (Quantity < 1)
+            {
+                result.Add(new ValidationResult("Invalid number of units"));
+            }
+            return result;
         }
     }
 }

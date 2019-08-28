@@ -115,7 +115,7 @@ namespace QuickReach.ECommerce.API.Controllers
 
             this.repository.Update(id, newSupplier);
 
-            return Ok(repository);
+            return Ok(newSupplier);
         }
 
         [HttpDelete("{id}")]

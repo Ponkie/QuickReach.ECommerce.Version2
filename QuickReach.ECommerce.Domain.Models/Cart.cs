@@ -20,9 +20,16 @@ namespace QuickReach.ECommerce.Domain.Models
         {
             ((ICollection<CartItem>)this.Items).Add(cartItem);
         }
-        
 
-        
+
+
+        public void AddCartItem(Product product, CartItem cartItem)
+        {
+            cartItem.ProductId = product.ID.ToString();
+            cartItem.ProductName = product.Name;
+
+            ((ICollection<CartItem>)this.Items).Add(cartItem);
+        }
     }
 }
 

@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 public class Customer : EntityBase
 {
+    public Customer()
+    {
+        Carts = new List<Cart>();
+    }
     [Required]
     public string CardNumber { get; set; }
     [Required]
