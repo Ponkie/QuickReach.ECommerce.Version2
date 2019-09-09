@@ -10,8 +10,8 @@ using QuickReach.ECommerce.Infra.Data;
 namespace QuickReach.ECommerce.Infra.Data.Migrations
 {
     [DbContext(typeof(ECommerceDbContext))]
-    [Migration("20190703055055_added customers")]
-    partial class addedcustomers
+    [Migration("20190904025414_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,6 +77,8 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Carts");
                 });
 
@@ -90,11 +92,9 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
 
                     b.Property<decimal>("OldUnitPrice");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired();
+                    b.Property<string>("ProductId");
 
-                    b.Property<string>("ProductName")
-                        .IsRequired();
+                    b.Property<string>("ProductName");
 
                     b.Property<int>("Quantity");
 
@@ -190,39 +190,39 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
 
             modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.ProductCategory", b =>
                 {
-                    b.Property<int>("CategoryID");
+                    b.Property<int>("CategoryId");
 
-                    b.Property<int>("ProductID");
+                    b.Property<int>("ProductId");
 
-                    b.HasKey("CategoryID", "ProductID");
+                    b.HasKey("CategoryId", "ProductId");
 
-                    b.HasIndex("ProductID");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductCategory");
                 });
 
             modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.ProductManufacturer", b =>
                 {
-                    b.Property<int>("ManufacturerID");
+                    b.Property<int>("ManufacturerId");
 
-                    b.Property<int>("ProductID");
+                    b.Property<int>("ProductId");
 
-                    b.HasKey("ManufacturerID", "ProductID");
+                    b.HasKey("ManufacturerId", "ProductId");
 
-                    b.HasIndex("ProductID");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductManufacturer");
                 });
 
             modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.ProductSupplier", b =>
                 {
-                    b.Property<int>("SupplierID");
+                    b.Property<int>("SupplierId");
 
-                    b.Property<int>("ProductID");
+                    b.Property<int>("ProductId");
 
-                    b.HasKey("SupplierID", "ProductID");
+                    b.HasKey("SupplierId", "ProductId");
 
-                    b.HasIndex("ProductID");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductSupplier");
                 });
@@ -246,6 +246,38 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Supplier");
+                });
+
+            modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.User", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.Cart", b =>
+                {
+                    b.HasOne("Customer")
+                        .WithMany("Carts")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("QuickReach.ECommerce.Domain.Models.CartItem", b =>
@@ -273,12 +305,12 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
                 {
                     b.HasOne("QuickReach.ECommerce.Domain.Models.Category", "Category")
                         .WithMany("ProductCategories")
-                        .HasForeignKey("CategoryID")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("QuickReach.ECommerce.Domain.Models.Product", "Product")
                         .WithMany("ProductCategories")
-                        .HasForeignKey("ProductID")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -286,12 +318,12 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
                 {
                     b.HasOne("QuickReach.ECommerce.Domain.Models.Manufacturer", "Manufacturer")
                         .WithMany("ProductManufacturers")
-                        .HasForeignKey("ManufacturerID")
+                        .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("QuickReach.ECommerce.Domain.Models.Product", "Product")
                         .WithMany("ProductManufacturers")
-                        .HasForeignKey("ProductID")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -299,12 +331,12 @@ namespace QuickReach.ECommerce.Infra.Data.Migrations
                 {
                     b.HasOne("QuickReach.ECommerce.Domain.Models.Product", "Product")
                         .WithMany("ProductSuppliers")
-                        .HasForeignKey("ProductID")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("QuickReach.ECommerce.Domain.Models.Supplier", "Supplier")
                         .WithMany("ProductSuppliers")
-                        .HasForeignKey("SupplierID")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

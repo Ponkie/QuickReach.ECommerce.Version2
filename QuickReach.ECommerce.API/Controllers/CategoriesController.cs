@@ -50,14 +50,14 @@ namespace QuickReach.ECommerce.API.Controllers
                 "Server=.;Database=QuickReachDb;Integrated Security=true;";
                 var connection = new SqlConnection(connectionString);
                 var sql = @"SELECT p.ID,
-                         pc.ProductID, 
-                         pc.CategoryID,
+                         pc.ProductId, 
+                         pc.CategoryId,
                          p.Name, 
                          p.Description,
                          p.Price,
                          p.ImageUrl
-                    FROM Product p INNER JOIN ProductCategory pc ON p.ID = pc.ProductID
-                    Where pc.CategoryID = @categoryId";
+                    FROM Product p INNER JOIN ProductCategory pc ON p.ID = pc.ProductId
+                    Where pc.CategoryId = @categoryId";
                 var categories = connection
                     .Query<SearchItemViewModel>(
                     sql, new { categoryId = id })
@@ -92,28 +92,18 @@ namespace QuickReach.ECommerce.API.Controllers
             {
                 return NotFound();
             }
-            if (productRepository.Retrieve(entity.ProductID) == null)
+            var product = productRepository.Retrieve(entity.ProductId);
+            if (product == null)
             {
                 return NotFound();
             }
             category.AddProduct(entity);
+            product.AddCategory(entity);
 
-            categoryRepository.Update(entity.CategoryID, category);
+            categoryRepository.Update(entity.CategoryId, category);
+            productRepository.Update(entity.ProductId, product);
             return Ok(category);
 
-        }
-
-        [HttpPut]
-        public IActionResult Put(int id, [FromBody] Category category)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            this.categoryRepository.Update(id, category);
-
-            return Ok(category);
         }
 
         [HttpDelete("{id}")]
@@ -124,7 +114,20 @@ namespace QuickReach.ECommerce.API.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}/products/{productId}")]
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Category newCategory)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            this.categoryRepository.Update(id, newCategory);
+
+            return Ok(newCategory);
+        }
+
+        [HttpDelete("{id}/products/{productId}")]
         public IActionResult DeleteCategoryProduct(int id, int productId)
         {
             if (!ModelState.IsValid)

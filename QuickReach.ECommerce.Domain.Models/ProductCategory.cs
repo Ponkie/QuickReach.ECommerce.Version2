@@ -6,9 +6,9 @@ namespace QuickReach.ECommerce.Domain.Models
 {
     public  class ProductCategory
     {
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; }
     }
 }

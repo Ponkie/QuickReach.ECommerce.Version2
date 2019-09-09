@@ -36,6 +36,7 @@ namespace QuickReach.ECommerce.API
             services.AddTransient<ISupplierRepository, SupplierRepository>();
             services.AddTransient<IManufacturerRepository, ManufacturerRepository>();
             services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddCors(options =>
             {

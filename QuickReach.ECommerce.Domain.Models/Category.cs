@@ -51,13 +51,11 @@ namespace QuickReach.ECommerce.Domain.Models
             ((ICollection<ProductCategory>)this.ProductCategories).Add(child);
         }
 
-  
-
-            public ProductCategory GetProduct(int productId)
+        public ProductCategory GetProduct(int productId)
         {
             return ((ICollection<ProductCategory>)this.ProductCategories)
-                    .FirstOrDefault(pc => pc.CategoryID == this.ID &&
-                               pc.ProductID == productId);
+                    .FirstOrDefault(pc => pc.CategoryId == this.ID &&
+                               pc.ProductId == productId);
         }
 
         public void RemoveProduct(int productId)

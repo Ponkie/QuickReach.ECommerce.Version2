@@ -56,7 +56,7 @@ namespace QuickReach.ECommerce.API.Controllers
         public IActionResult AddSupplierManufacturer(int id, [FromBody] ProductManufacturer entity)
         {
             var manufacturer = repository.Retrieve(id);
-            var product = productRepository.Retrieve(entity.ProductID);
+            var product = productRepository.Retrieve(entity.ProductId);
 
             if (!ModelState.IsValid)
             {

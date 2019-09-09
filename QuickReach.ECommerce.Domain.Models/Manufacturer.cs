@@ -32,8 +32,8 @@ namespace QuickReach.ECommerce.Domain.Models
         public ProductManufacturer GetProduct(int productId)
         {
             return ((ICollection<ProductManufacturer>)this.ProductManufacturers)
-                                                      .FirstOrDefault(pc => pc.ManufacturerID == this.ID &&
-                                                                            pc.ProductID == productId);
+                                                      .FirstOrDefault(pc => pc.ManufacturerId == this.ID &&
+                                                                            pc.ProductId == productId);
         }
         public void RemoveProduct(int productId)
         {

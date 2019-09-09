@@ -12,14 +12,14 @@ namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
         public void Configure(EntityTypeBuilder<ProductCategory> builder)
         {
             builder.ToTable("ProductCategory");
-            builder.HasKey(cr => new { cr.CategoryID, cr.ProductID });
+            builder.HasKey(cr => new { cr.CategoryId, cr.ProductId });
             builder.HasOne(cr => cr.Category)
                    .WithMany(c => c.ProductCategories)
-                   .HasForeignKey("CategoryID");
+                   .HasForeignKey("CategoryId");
 
             builder.HasOne(cr => cr.Product)
                    .WithMany(c => c.ProductCategories)
-                   .HasForeignKey("ProductID");
+                   .HasForeignKey("ProductId");
         }
     }
 }

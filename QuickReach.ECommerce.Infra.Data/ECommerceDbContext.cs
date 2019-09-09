@@ -39,6 +39,7 @@ namespace QuickReach.ECommerce.Infra.Data
             modelBuilder.ApplyConfiguration(new ProductSupplierEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductManufacturerEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CartEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ManufacturerEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CartItemEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
@@ -52,6 +53,7 @@ namespace QuickReach.ECommerce.Infra.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; } 
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -59,3 +61,4 @@ namespace QuickReach.ECommerce.Infra.Data
 
     }
 }
+

@@ -37,6 +37,13 @@ namespace QuickReach.ECommerce.API.Controllers
             return Ok(product);
         }
 
+        [HttpGet("{id}/categories")]
+        public IActionResult GetCategories(int id)
+        {
+            var product = this.productRepository.Retrieve(id);
+            return Ok(product.ProductCategories);
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] Product newProduct)
         {
@@ -63,7 +70,7 @@ namespace QuickReach.ECommerce.API.Controllers
         //    return CreatedAtAction(nameof(this.Get), new { id = newProduct.ID }, newProduct);
         //}
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Product product)
         {
             if (!ModelState.IsValid)

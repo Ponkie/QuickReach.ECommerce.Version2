@@ -4,17 +4,14 @@ using QuickReach.ECommerce.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 
 namespace QuickReach.ECommerce.Infra.Data.EntityConfiguration
 {
-    public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
+    class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
     {
-        public object CategoryId { get; internal set; }
-
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(p => p.ID)
+            builder.Property(c => c.ID)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
         }

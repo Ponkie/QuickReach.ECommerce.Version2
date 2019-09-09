@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190624063658_Add Migration to Category.cs" />
     <Compile Remove="Migrations\20190624063658_Add Migration to Category.Designer.cs" />
+    <Compile Remove="Migrations\20190904024204_renamed productcategory columns.cs" />
+    <Compile Remove="Migrations\20190904024204_renamed productcategory columns.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

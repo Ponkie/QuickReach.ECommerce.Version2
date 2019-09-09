@@ -1,4 +1,5 @@
-﻿using QuickReach.ECommerce.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using QuickReach.ECommerce.Domain;
 using QuickReach.ECommerce.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,15 @@ namespace QuickReach.ECommerce.Infra.Data.Repositories
             .ToList();
 
             return result;
+        }
+
+        public override Product Retrieve(int entityId)
+        {
+            var entity = this.context.Products
+                       .Include(c => c.ProductCategories)
+                       .Where(c => c.ID == entityId)
+                       .FirstOrDefault();
+            return entity;
         }
 
     }
