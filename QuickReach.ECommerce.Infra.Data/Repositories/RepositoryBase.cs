@@ -53,9 +53,9 @@ namespace QuickReach.ECommerce.Infra.Data
 
         public TEntity Update(int entityId, TEntity entity)
         {
-            var entry = this.context.Update<TEntity>(entity);
+            var entry = this.context.UpdateAsync<TEntity>(entity);
 
-            this.context.SaveChanges();
+            this.context.SaveChangesAsync();
 
             return entry.Entity;
         }
